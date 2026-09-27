@@ -1,16 +1,18 @@
 # 🚗 Sistema de Gestión de Ventas para Concesionario Chevrolet
 
-Sistema web desarrollado para gestionar las principales operaciones de un concesionario de vehículos Chevrolet en Colombia.
+Sistema web full-stack desarrollado para gestionar diferentes procesos relacionados con la operación y venta de vehículos en un concesionario Chevrolet en Colombia.
 
-El proyecto permite administrar usuarios, clientes, vehículos, ventas, pagos y financiación, además de generar facturas en PDF, códigos QR y reportes de información.
+El proyecto integra un **frontend desarrollado con React**, un **backend desarrollado con FastAPI** y una **base de datos PostgreSQL**, implementando autenticación, autorización por roles, gestión de clientes y vehículos, ventas, pagos, financiación, generación de facturas en PDF y reportes.
 
-El sistema está dividido en un **frontend desarrollado con React** y un **backend desarrollado con FastAPI**, utilizando **PostgreSQL** como sistema de gestión de base de datos.
+## 📸 Vista previa
+
+> Próximamente se agregarán capturas de pantalla de las principales funcionalidades de la aplicación.
 
 ---
 
-## 📌 Funcionalidades
+## 📌 Funcionalidades principales
 
-* 🔐 Inicio de sesión mediante autenticación con JWT.
+* 🔐 Autenticación de usuarios mediante JWT.
 * 👥 Gestión de usuarios y roles.
 * 👤 Gestión de clientes.
 * 🚗 Gestión de vehículos.
@@ -30,12 +32,14 @@ El sistema está dividido en un **frontend desarrollado con React** y un **backe
 
 El sistema cuenta con diferentes roles para controlar el acceso a las funcionalidades:
 
-* **Superadmin**
-* **Administrador**
-* **Usuario**
-* **Consultas**
+| Rol               | Descripción                                                       |
+| ----------------- | ----------------------------------------------------------------- |
+| **Superadmin**    | Administración general del sistema.                               |
+| **Administrador** | Gestión de las principales operaciones del concesionario.         |
+| **Usuario**       | Acceso a las funcionalidades permitidas para usuarios operativos. |
+| **Consultas**     | Acceso principalmente orientado a la consulta de información.     |
 
-Cada rol cuenta con diferentes permisos dentro de la aplicación.
+Los permisos disponibles dependen del rol asignado al usuario.
 
 ---
 
@@ -72,10 +76,12 @@ Cada rol cuenta con diferentes permisos dentro de la aplicación.
 
 ---
 
-## 🏗️ Estructura del proyecto
+## 🏗️ Arquitectura del proyecto
+
+El proyecto está dividido en dos aplicaciones principales:
 
 ```text
-concesionario-chevrolet/
+Concesionario/
 │
 ├── backend/
 │   ├── app/
@@ -99,7 +105,20 @@ concesionario-chevrolet/
 └── README.md
 ```
 
-El backend utiliza una separación modular entre configuración, modelos, rutas y middleware.
+### Backend
+
+El backend utiliza una organización modular para separar diferentes responsabilidades de la aplicación:
+
+* `config/`: configuración del proyecto.
+* `middleware/`: middleware utilizado por la aplicación.
+* `models/`: modelos y entidades de la base de datos.
+* `routes/`: endpoints de la API.
+* `facturas/`: archivos relacionados con la generación y demostración de facturas.
+* `main.py`: punto de entrada de la aplicación.
+
+### Frontend
+
+El frontend está desarrollado con React y Vite y consume los servicios proporcionados por la API REST del backend.
 
 ---
 
@@ -108,8 +127,8 @@ El backend utiliza una separación modular entre configuración, modelos, rutas 
 ### 1. Clonar el repositorio
 
 ```bash
-git clone <URL_DEL_REPOSITORIO>
-cd concesionario-chevrolet
+git clone https://github.com/BetancourtRomeroDaniel/Concesionario.git
+cd Concesionario
 ```
 
 ### 2. Configurar el backend
@@ -126,7 +145,7 @@ Crear un entorno virtual:
 python3 -m venv venv
 ```
 
-Activar el entorno virtual.
+#### Activar el entorno virtual
 
 **macOS / Linux:**
 
@@ -150,21 +169,21 @@ pip install -r requirements.txt
 
 ## 🗄️ Configuración de PostgreSQL
 
-El proyecto utiliza PostgreSQL como base de datos.
+El proyecto utiliza **PostgreSQL** como sistema de gestión de base de datos.
 
-Crear una base de datos, por ejemplo:
+Crear una base de datos local, por ejemplo:
 
 ```text
 concesionario_chevrolet
 ```
 
-Después crear el archivo:
+Después, crear el archivo:
 
 ```text
 backend/.env
 ```
 
-Tomando como referencia el archivo `.env.example`.
+utilizando `.env.example` como referencia.
 
 Ejemplo:
 
@@ -178,7 +197,7 @@ ALGORITHM=HS256
 ACCESS_TOKEN_EXPIRE_MINUTES=60
 ```
 
-> ⚠️ No subir el archivo `.env` a GitHub. Este archivo contiene información que debe mantenerse privada.
+> ⚠️ **Importante:** no subir el archivo `.env` a GitHub. Las credenciales y claves privadas deben mantenerse fuera del repositorio.
 
 ---
 
@@ -190,13 +209,15 @@ Desde la carpeta `backend`:
 uvicorn main:app --reload
 ```
 
-El servidor estará disponible normalmente en:
+El backend estará disponible normalmente en:
 
 ```text
 http://127.0.0.1:8000
 ```
 
-Documentación interactiva de FastAPI:
+### Documentación de la API
+
+FastAPI proporciona documentación interactiva mediante Swagger:
 
 ```text
 http://127.0.0.1:8000/docs
@@ -218,13 +239,13 @@ Instalar las dependencias:
 npm install
 ```
 
-Ejecutar el proyecto:
+Ejecutar la aplicación:
 
 ```bash
 npm run dev
 ```
 
-También están disponibles los siguientes comandos:
+Otros comandos disponibles:
 
 ```bash
 npm run build
@@ -240,7 +261,7 @@ La aplicación utiliza:
 
 * **PostgreSQL** para almacenar la información.
 * **SQLAlchemy** como ORM.
-* Modelos para representar las entidades principales del sistema.
+* Modelos para representar las principales entidades del sistema.
 * Validaciones para controlar la información registrada.
 
 Al iniciar el backend, SQLAlchemy utiliza los modelos importados para crear las tablas que todavía no existan en la base de datos.
@@ -259,7 +280,7 @@ backend/facturas/
 
 se encuentran archivos utilizados como datos de demostración del proyecto.
 
-Los datos incluidos en estas facturas son **ficticios y utilizados únicamente con fines académicos y de demostración**.
+Los datos incluidos en estas facturas son ficticios y se utilizan únicamente con fines académicos y de demostración.
 
 ---
 
@@ -268,19 +289,37 @@ Los datos incluidos en estas facturas son **ficticios y utilizados únicamente c
 El proyecto implementa diferentes mecanismos para proteger la aplicación:
 
 * Autenticación mediante JWT.
-* Control de acceso mediante roles.
+* Control de acceso basado en roles.
 * Variables de entorno para información sensible.
-* Archivo `.gitignore` para evitar subir credenciales.
+* `.gitignore` para evitar subir archivos privados.
 * Validación de datos.
 * Manejo global de excepciones.
 
 ---
 
+## 🧪 Pruebas y herramientas de desarrollo
+
+Durante el desarrollo se utilizaron diferentes herramientas para verificar el funcionamiento de la aplicación:
+
+### Postman
+
+Utilizado para probar los endpoints de la API REST, incluyendo operaciones relacionadas con usuarios, clientes, vehículos, ventas y otros recursos.
+
+### DBeaver
+
+Utilizado para administrar y consultar la base de datos PostgreSQL, además de verificar la información almacenada por la aplicación.
+
+### FastAPI Swagger
+
+Utilizado para consultar y probar de forma interactiva los endpoints disponibles en la API.
+
+---
+
 ## 🎯 Objetivo del proyecto
 
-El objetivo principal es desarrollar un sistema web que permita digitalizar y organizar diferentes procesos relacionados con la gestión de un concesionario de vehículos.
+El objetivo principal fue desarrollar un sistema web que permitiera digitalizar y organizar diferentes procesos relacionados con la gestión de un concesionario de vehículos.
 
-Además, el proyecto permitió aplicar conocimientos relacionados con:
+El desarrollo permitió integrar conocimientos de:
 
 * Desarrollo backend.
 * Desarrollo frontend.
@@ -297,7 +336,19 @@ Además, el proyecto permitió aplicar conocimientos relacionados con:
 
 Durante el desarrollo del proyecto se trabajó en la integración de diferentes tecnologías para construir una aplicación web completa, conectando el frontend, backend y base de datos.
 
-También se adquirió experiencia en organización de proyectos, manejo de dependencias, variables de entorno, control de versiones y pruebas de las funcionalidades mediante herramientas como Postman y DBeaver.
+También se adquirieron conocimientos prácticos en:
+
+* Organización de proyectos full-stack.
+* Desarrollo de APIs REST.
+* Integración entre React y FastAPI.
+* Manejo de bases de datos PostgreSQL.
+* Uso de SQLAlchemy como ORM.
+* Autenticación y autorización mediante JWT.
+* Manejo de variables de entorno.
+* Validación de datos.
+* Generación de documentos PDF.
+* Pruebas de APIs.
+* Control de versiones con Git y GitHub.
 
 ---
 
@@ -307,4 +358,13 @@ También se adquirió experiencia en organización de proyectos, manejo de depen
 
 Estudiante de Ingeniería de Sistemas — ETITC
 
-GitHub: **BetancourtRomeroDaniel**
+GitHub: [@BetancourtRomeroDaniel](https://github.com/BetancourtRomeroDaniel)
+
+---
+
+## 📌 Estado del proyecto
+
+Proyecto académico desarrollado como aplicación web full-stack para la gestión de procesos de un concesionario de vehículos.
+
+El proyecto puede continuar evolucionando con nuevas funcionalidades, mejoras de interfaz, pruebas automatizadas y despliegue en un entorno de producción.
+
